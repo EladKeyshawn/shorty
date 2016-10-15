@@ -12,14 +12,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // handles JSON bodies
 app.use(bodyParser.json());
 // handles URL encoded bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
 
 app.use('/', mainRouter);
 
 
-app.listen(8080, function () {
+app.listen(8080, function() {
     console.log('listening in port 8080...');
 });
-
