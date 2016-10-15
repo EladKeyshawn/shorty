@@ -5,13 +5,10 @@ var path = require("path");
 
 var mongoose = require('mongoose');
 var config = require('../config');
-// base58 for encoding and decoding functions
 var base58 = require('../utils/base58.js');
 
-// grab the url model
 var Url = require('../models/url');
 
-// create a connection to our MongoDB
 mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
 
 router.use(function timeLog(req, res, next) {
@@ -28,15 +25,14 @@ router.get('/', function (req, res) {
 router.post('/api/shorten', function (req, res) {
     console.log(req.body)
     var longUrl = req.body.url;
-    var shortUrl = ''; // the shortened URL we will return
+    var shortUrl = config.webhost; // the shortened URL we will return
     
     Url.findOne({long_url: longUrl}, function (err, doc) {
-        if (err) {throw err;}
+        if (err) throw err;
         
         if(doc) {
             // then url is in db return base58 right away
-            shortUrl = config.webhost + base58.encode(doc._id);
-            res.send({'shortUrl': shortUrl});
+            shortUrl += base58.encode(doc._id);
         } else {
             var newUrl = Url({
                 long_url: longUrl
@@ -44,17 +40,17 @@ router.post('/api/shorten', function (req, res) {
             
             newUrl.save(function (err) {
                 if(err) console.log(err);
-                
-                var newShortUrl = config.webHost + base58.encode(longUrl);
-                
-                res.send({
-                    'shortUrl': shortUrl
-                });
+                shortUrl = config.webhost + base58.encode(newUrl._id);
+
             })
+            
+
             
         }
         
-    } )
+        res.send({'shortUrl': shortUrl});
+        
+    });
     
     
 });

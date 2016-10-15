@@ -30,7 +30,7 @@ urlSchema.pre('save', function(next){
       doc.created_at = new Date();
       next();
   });
-})
+});
 
 
 var Url = mongoose.model('Url', urlSchema);
