@@ -6,7 +6,7 @@ my url shortener
 sudo apt-get install mongodb-org 
 ```
 
-### for using c9.com -> change config file accordingly
+### for using c9.com -> change config file accordingly:
 ```
 var config = {};
 
@@ -20,11 +20,17 @@ config.db.name = 'url_shortener';
 module.exports = config;
 ```
 
-### running our db server
+### running our db server:
 ```
 mkdir data
 cd data
 mongod --nojournal --dbpath=data // --nojournal required only for c9.com due to limited memory
+```
+
+### initializing our db:
+```
+use shorty
+db.counters.insert({_id: 'url_count', val: 1});
 ```
 
 
@@ -33,3 +39,9 @@ mongod --nojournal --dbpath=data // --nojournal required only for c9.com due to 
 ```
 mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
 ```
+
+### running server:
+```
+node server.js
+```
+
