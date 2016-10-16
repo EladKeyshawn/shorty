@@ -1,9 +1,10 @@
 # shorty
 my url shortener
 
-### install mongodb
+### install mongodb & and modules
 ```
 sudo apt-get install mongodb-org 
+npm install express body-parser mongoose path --save
 ```
 
 ### for using c9.com -> change config file accordingly:
