@@ -1,7 +1,35 @@
 # shorty
 my url shortener
 
-
+### install mongodb
 ```
 sudo apt-get install mongodb-org 
+```
+
+### for using c9.com -> change config file accordingly
+```
+var config = {};
+
+config.db = {};
+
+config.webhost = 'https://url-shortener-eladk.c9users.io/';
+
+config.db.host = 'eladk-url_shortener-3902741';
+config.db.name = 'url_shortener';
+
+module.exports = config;
+```
+
+### running our db server
+```
+mkdir data
+cd data
+mongod --nojournal --dbpath=data // --nojournal required only for c9.com due to limited memory
+```
+
+
+
+### connecting to our db in code:
+```
+mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
 ```
